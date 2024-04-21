@@ -1,5 +1,5 @@
 #pragma once
-
+#include "Model.h"
 namespace LR4OOPpart2 {
 
 	using namespace System;
@@ -9,6 +9,7 @@ namespace LR4OOPpart2 {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	static int A = 0, B = 0, C = 0;
+	static Model model;
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
@@ -228,19 +229,16 @@ namespace LR4OOPpart2 {
 private: System::Void textBox4_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void numUpDwnA_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (numUpDwnA->Value > numUpDwnB->Value) {
-		numUpDwnA->Value = A;
-	}
-	else A = int(numUpDwnA->Value);
-
+	model.setA(int(numUpDwnA->Value));
+	numUpDwnA->Value = model.getA();
 }
 private: System::Void numUpDwnB_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
-	if (numUpDwnB->Value > numUpDwnC->Value) {
-		numUpDwnB->Value = C;
-	}
-	else B = int(numUpDwnB->Value);
+	model.setB(int(numUpDwnB->Value));
+	numUpDwnB->Value = model.getB();
 }
 private: System::Void numUpDwnC_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+	model.setC(int(numUpDwnC->Value));
+	numUpDwnC->Value = model.getC();
 }
 };
 }
