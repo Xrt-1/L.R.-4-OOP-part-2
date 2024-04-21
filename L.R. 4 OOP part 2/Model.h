@@ -1,9 +1,15 @@
 #pragma once
 #include <iostream>
+#include <functional>
+#include <vector>
+using namespace System;
+using namespace System::Collections::Generic;
 
-class Model {
+public delegate void DataChangedEventHandler(Object^ sender, EventArgs^ e);
+public ref class Model {
 private:
 	int A, B, C;
+	List<DataChangedEventHandler^>^ dataChangedListeners;
 public:
 	Model():A(0), B(0), C(0) {	
 	}
@@ -24,9 +30,10 @@ public:
 		if (0 <= a && a <= 100) {
 			if (a <= B) {
 				A = a;
+				notifyObservers();
 			}
 		}
-		else if (a > 100) A = 100;
+		//else if (a > 100) A = 100;
 
 	}
 	void setB(int b) {
@@ -38,8 +45,15 @@ public:
 			else if (b <= C) {
 				B = b;
 			}
+			notifyObservers();
 		}
-		else if (b > 100) B = 100;
+		/*else if (b > 100) {
+			B = 100;
+			notifyObservers();
+		}
+		else if (b < 0) {
+			B = 0;
+		}*/
 
 	}
 	void setC(int c) {
@@ -49,10 +63,22 @@ public:
 				A = A - (C - c);
 			}
 			C = c;
+			notifyObservers();
 		}
-		else if (c > 100) C = 100;
-		
+		/*else if (c > 100){
+			C = 100;
+			notifyObservers();
+		}	*/	
 	}
 
+};
+
+public class Model {
+	private int value;
+	public int System.EventHandler DataChanged;
+	public void setValue{
+		...
+	DataChanged.Invoke(this,null);
+	}
 
 };

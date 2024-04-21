@@ -10,6 +10,7 @@ namespace LR4OOPpart2 {
 	using namespace System::Drawing;
 	static int A = 0, B = 0, C = 0;
 	static Model model;
+
 	/// <summary>
 	/// Сводка для MyForm
 	/// </summary>
@@ -22,6 +23,7 @@ namespace LR4OOPpart2 {
 			//
 			//TODO: добавьте код конструктора
 			//
+
 		}
 
 	protected:
@@ -213,6 +215,8 @@ namespace LR4OOPpart2 {
 			this->Controls->Add(this->numUpDwnA);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
+			this->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MyForm::MyForm_MouseClick);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numUpDwnA))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numUpDwnB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numUpDwnC))->EndInit();
@@ -240,5 +244,16 @@ private: System::Void numUpDwnC_ValueChanged(System::Object^ sender, System::Eve
 	model.setC(int(numUpDwnC->Value));
 	numUpDwnC->Value = model.getC();
 }
+private: System::Void MyForm_Load(System::Object^ sender, System::EventArgs^ e) {
+	model.addObserver(numUpDwnA_ValueChanged);
+	/*model.addObserver(std::bind(&MyForm::numUpDwnA_ValueChanged, this));
+	model.addObserver(std::bind(&MyForm::numUpDwnB_ValueChanged, this));
+	model.addObserver(std::bind(&MyForm::numUpDwnC_ValueChanged, this));*/
+	
+}
+private: System::Void MyForm_MouseClick(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
+	MessageBox::Show((model.getB()).ToString());
+}
+
 };
 }
